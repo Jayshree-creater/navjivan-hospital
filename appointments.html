@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointments - Navjivan Hospital</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>  <!-- EmailJS लाइब्रेरी -->
+</head>
+<body>
+    <header class="bg-primary text-white">
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container">
+                <a class="navbar-brand" href="index.html">
+                    <img src="data:image/png;base64,CAMSVhoyKhBlLXpmNVZ3SGV3QUJudWxNMg56ZjVWd0hld0FCbnVsTToOVGRCNjJPdkdzeEp1M00gBCocCgZtb3NhaWMSEGUtemY1VndIZXdBQm51bE0YADABGAcg1L_rrwwwAkoIEAIYAiACKAI" alt="Navjivan Hospital Logo" height="40" class="me-2">
+                    Navjivan Hospital
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+                        <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
+                        <li class="nav-item"><a class="nav-link" href="doctors.html">Doctors</a></li>
+                        <li class="nav-item"><a class="nav-link" href="appointments.html">Appointments</a></li>
+                        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                        <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
+                        <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
+                    </ul>
+                    <div class="lang-toggle ms-3">
+                        <button class="btn btn-outline-light btn-sm" onclick="switchLang('en')">EN</button>
+                        <button class="btn btn-outline-light btn-sm" onclick="switchLang('hi')">HI</button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <section class="container py-5">
+        <h1>Book an Appointment</h1>
+        <p>Fill the form below. We'll confirm via email or call.</p>
+        <form id="appointmentForm">
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+            <div class="mb-3">
+                <label for="phone" class="form-label">Phone</label>
+                <input type="tel" class="form-control" id="phone" name="phone" required>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <div class="mb-3">
+                <label for="department" class="form-label">Department</label>
+                <select class="form-control" id="department" name="department" required>
+                    <option value="">Select</option>
+                    <option value="General Medicine">General Medicine</option>
+                    <option value="Cardiology">Cardiology</option>
+                    <option value="Pediatrics">Pediatrics</option>
+                    <option value="Orthopedics">Orthopedics</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="date" class="form-label">Preferred Date</label>
+                <input type="date" class="form-control" id="date" name="date" required>
+            </div>
+            <div class="mb-3">
+                <label for="message" class="form-label">Message (Optional)</label>
+                <textarea class="form-control" id="message" name="message" rows="3"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit Appointment</button>
+        </form>
+        <div id="thank-you" style="display:none;" class="alert alert-success mt-3">
+            Thank you! We'll contact you soon. Email sent successfully.
+        </div>
+        <div id="error" style="display:none;" class="alert alert-danger mt-3">
+            Error sending email. Please try again or contact us directly.
+        </div>
+    </section>
+    <footer class="bg-primary text-white py-4">
+        <div class="container text-center">
+            <p>582C+J62, Khalghat, Manawer Highway, Dharampuri, Madhya Pradesh 454449</p>
+            <p>Phone: +91-98765-43210 | Email: info@navjivanhospital.com</p>
+            <div class="social-links">
+                <a href="#" class="text-white me-3"><i class="fab fa-facebook fa-lg"></i></a>
+                <a href="#" class="text-white"><i class="fab fa-twitter fa-lg"></i></a>
+            </div>
+        </div>
+    </footer>
+    <script>
+        // EmailJS इनिशियलाइज करें
+        (function() {
+            emailjs.init("P-f-qAfLvSpqCi8Ol");  // आपकी Public Key
+        })();
+
+        // फॉर्म सबमिट हैंडलर
+        document.getElementById('appointmentForm').addEventListener('submit', function(event) {
+            event.preventDefault();  // पेज रिलोड रोकें
+
+            // फॉर्म डेटा लें
+            const formData = {
+                name: document.getElementById('name').value,
+                phone: document.getElementById('phone').value,
+                email: document.getElementById('email').value,
+                department: document.getElementById('department').value,
+                date: document.getElementById('date').value,
+                message: document.getElementById('message').value
+            };
+
+            // EmailJS से ईमेल भेजें
+            emailjs.send("service_5ek4592", "template_m2rdvlc", formData)  // आपकी Service ID और Template ID
+                .then(function(response) {
+                    console.log('SUCCESS!', response.status, response.text);
+                    document.getElementById('thank-you').style.display = 'block';
+                    document.getElementById('error').style.display = 'none';
+                    document.getElementById('appointmentForm').reset();  // फॉर्म क्लियर करें
+                }, function(error) {
+                    console.log('FAILED...', error);
+                    document.getElementById('error').style.display = 'block';
+                    document.getElementById('thank-you').style.display = 'none';
+                });
+        });
+
+        // लैंग्वेज स्विच (अगर चाहिए)
+        function switchLang(lang) {
+            const hiText = document.getElementById('hi-text');
+            if (hiText) {
+                hiText.style.display = (lang === 'hi') ? 'inline' : 'none';
+            }
+        }
+    </script>
+</body>
+</html>

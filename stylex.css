@@ -1,0 +1,10 @@
+body { font-family: 'Roboto', sans-serif; }
+.hero { min-height: 70vh; display: flex; align-items: center; }
+.animate-fade-in { animation: fadeIn 2s ease-in; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.services-carousel { background: #f8f9fa; }
+.why-choose-us { background: #e9ecef; }
+.stats { background: linear-gradient(to right, #007bff, #28a745); }
+.btn { border-radius: 25px; transition: transform 0.3s; }
+.btn:hover { transform: scale(1.05); }
+@media (max-width: 768px) { .hero h1 { font-size: 2rem; } .carousel-item { padding: 1rem; } }
